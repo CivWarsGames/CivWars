@@ -5,7 +5,7 @@
  * And requires some constant files
  */
 if(!defined('HOME')){
-define('HOME',$_SERVER[DOCUMENT_ROOT]."/documents/CivWars/");
+define('HOME',$_SERVER[DOCUMENT_ROOT]."/documents/CivWars/");//The project root relative to the server
 	}
 //This should be changed
 define('APP',HOME."GameServerV2/");
