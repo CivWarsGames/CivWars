@@ -6,7 +6,7 @@
  */
 
 if(!defined('HOME')){
-define('HOME',$_SERVER[DOCUMENT_ROOT]."/documents/CivWars2/");
+define('HOME',$_SERVER[DOCUMENT_ROOT]."/documents/CivWars/");
 }
 define('WEB_ROOT',HOME."web/");
 //This has to be changed
