@@ -4,7 +4,7 @@ require_once 'pathBuilder.php';
 }
 require_once APP.'logic/Session.php';
 require_once APP.'datamanager/serverSettings.php';
-require_once APP.'logic/Got.php';
+require_once APP.'Got.php';
 /**
  * 
  * Launches all the proces and selects the data to show
