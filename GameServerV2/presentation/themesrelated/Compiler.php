@@ -97,6 +97,5 @@ class Compiler extends CodeParser
 
 }
 
-$compiler = new Compiler("moderndark");
 
 ?>

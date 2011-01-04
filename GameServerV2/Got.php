@@ -28,7 +28,7 @@ class Got
 				break;
 				
 			case 'upgrade':
-				require_once APP.'logic/upgrade/UpgradeHandler.php';	
+				require_once APP.'logic/modify/upgrade/UpgradeHandler.php';	
 				$got = new Upgrade();
 				break;
 			

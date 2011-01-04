@@ -11,6 +11,7 @@ class CodeParser
 	protected $compiledCode = array();
 	protected $filename = array();
 	protected $tplRoot = '';
+	protected $block_names = array();
 
 	protected function getFileContent($file)
 	{
@@ -147,27 +148,35 @@ class CodeParser
 	 * @param String $textBlocks
 	 * @param Bool $secondTime this param is to do it recursively ex: $var['STH'][$otherVar]
 	 */
-	private function compileVarTags(&$textBlocks,$secondTime = false)
+	private function compileVarTags(&$textBlocks,$secondTime = false,$phptags = true)
 	{
 
 		if($secondTime == false){
-			$trad = array("$" => "", "[" => "['", "]" => "']", "$(" => "$(", "$." => "$.");
+			$trad = array("$" => "", "[" => "['", "]" => "']", "$(" => "$(", "$." => "$.", '[$i]' => '[$_i]');
 			$textBlocks = strtr($textBlocks, $trad);
 		}
 		$textBlocks = preg_replace('#\{([A-Za-z0-9\-_\[\]\:\'\.\$]+)\}#', "'.VarsContainer::\$display\\1.'", $textBlocks);
 		preg_match("#\{([A-Za-z0-9\-_\[\]\:\'\.\$]+)\}#", $textBlocks, $matches);
 		if(isset($matches[0])){
-			$this->compileVarTags($textBlocks,true);
+			if($phptags){
+				$this->compileVarTags($textBlocks,true);
+			}else{
+				$this->compileVarTags($textBlocks,true,false);
+			}
 		}else{
-			$trad = array("''." => "", ".''" => "", "'." => "<?php echo ", ".'" => ";?>");
+			if($phptags){
+				$trad = array("''." => "", ".''" => "", "'." => "<?php echo ", ".'" => ";?>");
+			}else{
+				$trad = array("''." => "", ".'" => "", "'." => "", ".'" => "");
+			}
 			$textBlocks = strtr($textBlocks, $trad);
 		}
-
 		return;
 	}
 
 	private function compileTagBlock($tagArgs)
 	{
+		$this->compileVarTags($tagArgs,false,false);
 		$noNesting = false;
 
 		// Is the designer wanting to call another loop in a loop?
@@ -189,33 +198,33 @@ class CodeParser
 
 			if ($match[2] < 0)
 			{
-				$loopStart = '($_' . $tagArgs . '_count ' . $match[2] . ' < 0 ? 0 : $_' . $tagArgs . '_count ' .
+				$loopStart = '(' . $tagArgs . ' ' . $match[2] . ' < 0 ? 0 : ' . $tagArgs . ' ' .
 				$match[2] . ')';
 			}
 			else
 			{
-				$loopStart = '($_' . $tagArgs . '_count < ' . $match[2] . ' ? $_' . $tagArgs . '_count : ' .
+				$loopStart = '(' . $tagArgs . ' < ' . $match[2] . ' ? ' . $tagArgs . ' : ' .
 				$match[2] . ')';
 			}
 
 			if (strlen($match[3]) < 1 || $match[3] == -1)
 			{
-				$loopEnd = '$_' . $tagArgs . '_count';
+				$loopEnd = '' . $tagArgs . '';
 			}
 			else if ($match[3] >= 0)
 			{
-				$loopEnd = '(' . ($match[3] + 1) . ' > $_' . $tagArgs . '_count ? $_' . $tagArgs . '_count : ' .
+				$loopEnd = '(' . ($match[3] + 1) . ' > ' . $tagArgs . ' ? ' . $tagArgs . ' : ' .
 				($match[3] + 1) . ')';
 			}
 			else //if ($match[3] < -1)
 			{
-				$loopEnd = '$_' . $tagArgs . '_count' . ($match[3] + 1);
+				$loopEnd = '' . $tagArgs . '' . ($match[3] + 1);
 			}
 		}
 		else
 		{
 			$loopStart = 0;
-			$loopEnd = '$_' . $tagArgs . '_count';
+			$loopEnd = '' . $tagArgs . '';
 		}
 
 		$tagTemplatePhp = '';
@@ -234,9 +243,9 @@ class CodeParser
 		if (sizeof($block) < 2)
 		{
 			// Block is not nested.
-			$tagTemplate_php = '$_' . $tagArgs . "_count = (isset(\$this->_tpldata['$tagArgs'])) ?
-			 sizeof(\$this->_tpldata['$tagArgs']) : 0;";
-			$varref = "\$this->_tpldata['$tagArgs']";
+			$tagTemplate_php = '' . $tagArgs . " = (isset($tagArgs)) ?
+			 sizeof($tagArgs) : 0;";
+			$varref = $tagArgs;
 		}
 		else
 		{
@@ -249,10 +258,10 @@ class CodeParser
 			$varref = $this->generateBlockDataRef($namespace, false);
 
 			// Create the for loop code to iterate over this block.
-			$tagTemplatePhp = '$_' . $tagArgs . '_count = (isset(' . $varref . ')) ? sizeof(' . $varref . ') : 0;';
+			$tagTemplatePhp = '' . $tagArgs . ' = (isset(' . $varref . ')) ? sizeof(' . $varref . ') : 0;';
 		}
 
-		$tagTemplatePhp .= 'if ($_' . $tagArgs . '_count) {';
+		$tagTemplatePhp .= 'if (' . $tagArgs . ') {';
 
 		/**
 		 * The following uses foreach for iteration instead of a for loop, foreach is faster but requires PHP to make a copy of the contents of the array which uses more memory
@@ -264,13 +273,14 @@ class CodeParser
 		 * </code>
 		 */
 
-		$tagTemplatePhp .= 'for ($_' . $tagArgs . '_i = ' . $loopStart . '; $_' . $tagArgs . '_i < ' . $loopEnd . '; ++$_' . $tag_args . '_i){';
-		$tagTemplatePhp .= '$_'. $tagArgs . '_val = &' . $varref . '[$_'. $tagArgs. '_i];';
+		$tagTemplatePhp .= 'for ($_i = ' . $loopStart . '; $_i < ' . $loopEnd . '; ++$_i){';
+		//$tagTemplatePhp .= '$_'. $tagArgs . '_val = &' . $varref . '[$_'. $tagArgs. '_i];';
 
 		return $tagTemplatePhp;
 	}
 	private function compileTagIf($tagArgs, $elseif)
 	{
+		$this->compileVarTags($tagArgs,false,false);
 
 		// Tokenize args for 'if' tag.
 		preg_match_all('/(?:
@@ -376,32 +386,7 @@ class CodeParser
 					// no break
 
 				default:
-					//if (preg_match('#^((?:[a-z0-9\-_]+\.)+)?(\$)?(?=[A-Z])([A-Z0-9\-_]+)#s', $token, $varrefs))
-					if(preg_match('#\{([A-Za-z0-9\-_\[\]\:\'\.\$]+)\}#',$token, $varrefs))
-					{
-						$secondTime = false;
-						$repeat = true;
-
-						while($repeat){
-							if($secondTime == false){
-								$trad = array("$" => "", "[" => "['", "]" => "']");
-								$token = strtr($token, $trad);
-								$secondTime = true;
-							}
-							$token = preg_replace('#\{([A-Za-z0-9\-_\[\]\:\'\.\$]+)\}#', "'.VarsContainer::\$display\\1.'", $token);
-
-							preg_match("#\{([A-Za-z0-9\-_\[\]\:\'\.\$]+)\}#", $token, $matches);
-							if(!isset($matches[0])){
-								
-								$trad = array("''." => "", ".''" => "", "'." => "", ".'" => "");
-								$token = strtr($token, $trad);
-								$repeat = false;
-							}
-							//echo $token;
-						}
-
-					}
-					else if (preg_match('#^\.((?:[a-z0-9\-_]+\.?)+)$#s', $token, $varrefs))
+					if (preg_match('#^\.((?:[a-z0-9\-_]+\.?)+)$#s', $token, $varrefs))
 					{
 						// Allow checking if loops are set with .loopname
 						// It is also possible to check the loop count by doing <!-- IF .loopname > 1 --> for example
