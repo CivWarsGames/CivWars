@@ -5,7 +5,7 @@ if(!defined('APP')){
 require_once 'CodeParser.php';
 
 /**
- * 
+ *
  * This class "compiles"/ transforms the html comment code to php and saves it to the
  *  $themeroot/php folder
  *
@@ -22,7 +22,7 @@ class Compiler extends CodeParser
 		if($themeName!=""){
 			$themeName .= "/";
 		}
-		
+
 		$this->tplRoot = HOME."themes/".$themeName;
 		if(!@opendir($this->tplRoot."php")){
 			//CustomException no mkdir handler
@@ -69,28 +69,28 @@ class Compiler extends CodeParser
 	 * Write compiled file to cache directory
 	 */
 	private function compileWrite($handle, $data)
-	 {
+	{
 		$filename = $this->tplRoot."php/".$handle.".php";
 
 		if ($fp = @fopen($filename, 'wb'))
 		{
-		@flock($fp, LOCK_EX);
-		@fwrite ($fp, $data);
-		@flock($fp, LOCK_UN);
-		@fclose($fp);
+			@flock($fp, LOCK_EX);
+			@fwrite ($fp, $data);
+			@flock($fp, LOCK_UN);
+			@fclose($fp);
 
-		chmod($filename, 0777);		//TODO look chmods
-		
+			chmod($filename, 0777);		//TODO look chmods
+
 		}
 
 		return;
-		}
+	}
 
 	/**
 	 * We only declare this function (dirty?) ;)
 	 */
 	protected function tplInclude($filename){
-		
+
 	}
 
 

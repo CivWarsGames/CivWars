@@ -4,7 +4,7 @@ require_once 'pathBuilder.php';
 }
 require_once APP.'logic/Session.php';
 require_once APP.'datamanager/serverSettings.php';
-require_once APP.'Got.php';
+require_once APP.'logic/GetPost.php';
 /**
  * 
  * Launches all the proces and selects the data to show
@@ -30,7 +30,7 @@ class Play
 			//TODO redirect a non logged user
 		}
 		
-		Got::handleGetParams();
+		GetPost::handleGetPostParams();
 	}
 }
 

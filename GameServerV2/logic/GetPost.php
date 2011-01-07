@@ -4,16 +4,17 @@
  * This class handles all the params obtained by get method
  *
  */
-class Got
+class GetPost
 {
-	public static function handleGetParams()
+	public static function handleGetPostParams()
 	{
+		$_GET = array_merge($_GET,$_POST);
 		foreach ($_GET as $key => $value){
-			$got = self::getSwitcher($key);
+			$got = self::getPostSwitcher($key);
 		}
 	}
 
-	private static function getSwitcher($key)
+	private static function getPostSwitcher($key)
 	{
 		switch ($key){
 			
