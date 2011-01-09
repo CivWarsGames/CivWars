@@ -5,8 +5,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-HELLO
-<?php if ((3==3)) {  ?><!--  FOR ok=3 --><?php } ?>
 
 </body>
 </html>

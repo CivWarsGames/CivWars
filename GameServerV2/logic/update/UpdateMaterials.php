@@ -7,11 +7,12 @@ require_once APP.'logic/tools/BuildingsUtils.php';
 require_once APP.'datamanager/prices/researches.php';
 require_once APP.'datamanager/prices/buildings.php';
 require_once APP.'datamanager/prices/materials.php';
+require_once APP.'presentation/VarsContainer.php';
 require_once APP.'logic/User.php';
 
 /**
  *
- * This class updates the materials of a city
+ * This class updates the materials of a city and stores some results that the theme will need
  *
  */
 class UpdateMaterials
@@ -192,9 +193,9 @@ class UpdateMaterials
 			$hourProductions['ENERGY_DIRTY'] = floor($hourProduction['ENERGY']);						
 			$hourProductions['ENERGY'] = floor($hourProduction['ENERGY'] - $realEnergyCost);			
 			
-			VarCollector::setVar('QUANTITY', $quantities);
-			VarCollector::setVar('CAPACITY', $capacities);
-			VarCollector::setVar('HOUR_PRODUCTION', $hourProductions);		
+			VarCollector::setMaterialVars('QUANTITY', $quantities);
+			VarCollector::setMaterialVars('CAPACITY', $capacities);
+			VarCollector::setMaterialVars('HOUR_PRODUCTION', $hourProductions);		
 		}
 	}
 
