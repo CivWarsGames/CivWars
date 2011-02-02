@@ -25,6 +25,8 @@ class Play
 		if(self::$_session->get_sessionState() == true){
 			$user = self::$_session->user;
 			$user->update();
+			//go to index page
+			$_GET['page'] = 'index';
 		}else{
 			echo self::$_session->loginFailMessage;
 			//TODO redirect a non logged user
