@@ -21,7 +21,9 @@ class VarsContainer
         switch ($vars){
             case "MATERIAL": self::loadMaterialVars();
             break;
+            case "BUILDING": self::loadBuildingVars();
         }
+        
     }
     private static function loadMaterialVars()
     {
