@@ -7,11 +7,11 @@
  */
 class LoadMaterialsCosts
 {
-	private static $_materialNames = array();
+	public static $materialNames = array();
 	private static $loadedMaterialNames = false;
-	private static $_materialCosts = array();
+	public static $materialCosts = array();
 	private static $loadedMaterialCosts = false;
-	private static $_materialProduction = array();
+	public static $materialProduction = array();
 	private static $loadedMaterialProduction = false;
 	private static $faction;
 
@@ -19,12 +19,12 @@ class LoadMaterialsCosts
 	{
 		if(self::$loadedMaterialNames && self::$faction == $faction)
 		{
-			return self::$_materialNames;
+			return self::$materialNames;
 		}else{
-			self::$_materialNames = self::setmaterialNames($faction);
+			self::$materialNames = self::setmaterialNames($faction);
 			self::$faction = $faction;
 			self::$loadedMaterialNames = true;
-			return self::$_materialNames;
+			//return self::$materialNames;
 		}
 	}
 
@@ -32,12 +32,12 @@ class LoadMaterialsCosts
 	{
 		if(self::$loadedMaterialCosts && self::$faction == $faction)
 		{
-			return self::$_materialCosts;
+			return self::$materialCosts;
 		}else{
-			self::$_materialCosts = self::setmaterialCosts($faction);
+			self::$materialCosts = self::setmaterialCosts($faction);
 			self::$faction = $faction;
-			self::$_materialCosts = true;
-			return self::$_materialCosts;
+			self::$materialCosts = true;
+			//return self::$materialCosts;
 		}
 	}
 
@@ -45,12 +45,12 @@ class LoadMaterialsCosts
 	{
 		if(self::$loadedMaterialProduction && self::$faction == $faction)
 		{
-			return self::$_materialProduction;
+			return self::$materialProduction;
 		}else{
-			self::$_materialProduction = self::setmaterialProduction($faction);
+			self::$materialProduction = self::setmaterialProduction($faction);
 			self::$loadedMaterialProduction = true;
 			self::$faction = $faction;
-			return self::$_materialProduction;
+			//return self::$materialProduction;
 		}
 
 	}

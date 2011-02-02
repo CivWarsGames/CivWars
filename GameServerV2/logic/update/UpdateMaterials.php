@@ -80,8 +80,9 @@ class UpdateMaterials
 	private function calculateData()
 	{
 		//research bonuses
-		$researchesProperties = &LoadResearchesCosts::getResearchesProperties($this->faction);
-
+		LoadResearchesCosts::getResearchesProperties($this->faction);
+        $researchesProperties = &LoadResearchesCosts::$researchesProperties;
+		
 		$bonus['METAL'] = $this->_research['improved_metal_extraction'] == 1 ? $researchesProperties['IMPROVED_METAL_EXTRACTION'] : 1;
 		$bonus['OIL'] = $this->_research['improved_oil_extraction'] == 1 ? $researchesProperties['IMPROVED_OIL_EXTRACTION'] : 1;
 		$bonus['GOLD'] = $this->_research['investments'] == 1 ? $researchesProperties['INVESTMENTS'] : 1;
@@ -96,15 +97,19 @@ class UpdateMaterials
 		$level['STOCK_EXCHANGE'] = BuildingsUtils::getLevel('STOCK_EXCHANGE', $this->_buildingsInfo,$this->_faction);
 		$level['STOCK_EXCHANGE'] = isset($level['STOCK_EXCHANGE'][0]) ? $level['STOCK_EXCHANGE'][0] : 0;
 		//bonus
-		$buildingsProperties = &LoadBuildingsCosts::getbuildingProperties($this->faction);	
+		LoadBuildingsCosts::getbuildingProperties($this->faction);	
+		$buildingsProperties = &LoadBuildingsCosts::$buildingProperties;
 		
 		$bonus['METAL'] *= $buildingsProperties['STEEL_FACTORY'][$level['STEEL_FACTORY']];
 		$bonus['OIL'] *= $buildingsProperties['REFINERY'][$level['REFINERY']];
 		$bonus['GOLD'] *= $buildingsProperties['STOCK_EXCHANGE'][$level['STOCK_EXCHANGE']];
 
 		//Material Boxes and production
-		$materialsProduction = &LoadMaterialsCosts::getmaterialProduction($this->faction);
-		$materialsName = &LoadMaterialsCosts::getmaterialNames($this->faction);
+		LoadMaterialsCosts::getmaterialProduction($this->faction);
+        $materialsProduction = &LoadMaterialsCosts::$materialProduction;
+		LoadMaterialsCosts::getmaterialNames($this->faction);
+        $materialsName = &LoadMaterialsCosts::$materialNames;
+		
 
 		//Normal material boxes loop
 		foreach ($this->_materialsBoxesInfo as $key => $materialBoxInfo){

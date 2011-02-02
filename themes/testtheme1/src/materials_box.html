@@ -1,0 +1,8 @@
+<!-- INCLUDE MATERIAL -->
+<div>
+<span title="{[MATERIAL][HOUR_PRODUCTION][METAL]}">{[MATERIAL][QUANTITY][METAL]}/{[MATERIAL][CAPACITY][WAREHOUSE]}</span>
+<span title="{[MATERIAL][HOUR_PRODUCTION][OIL]}">{[MATERIAL][QUANTITY][OIL]}/{[MATERIAL][CAPACITY][WAREHOUSE]}</span>
+<span title="{[MATERIAL][HOUR_PRODUCTION][GOLD]}">
+<!-- IF {[MATERIAL][HOUR_PRODUCTION][GOLD]} >= 0 --><span>{[MATERIAL][QUANTITY][GOLD]}</span><!-- ELSE --><span style="color:red;">{[MATERIAL][QUANTITY][GOLD]}</span><!-- ENDIF -->/{[MATERIAL][CAPACITY][BANK]}</span>
+<span><!-- IF {[MATERIAL][HOUR_PRODUCTION][ENERGY]} >= 0 --><span>{[MATERIAL][HOUR_PRODUCTION][ENERGY]}</span><!-- ELSE --><span style="color:red;">{[MATERIAL][HOUR_PRODUCTION][ENERGY]}</span><!-- ENDIF -->/{[MATERIAL][HOUR_PRODUCTION][ENERGY_DIRTY]}</span>
+</div>

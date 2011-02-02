@@ -4,7 +4,7 @@
  * This file stores the buildings costs into arrays with the form
  *  $_buildingsNames['building_number] = building_name and
  *  $_buildingsCosts['costs']['building']['level']['cost_type_number'] = Cost
- *  $_buildingProperties['properties']['building']['level'] = Propertie
+ *  $buildingProperties['properties']['building']['level'] = Propertie
  *  
  *  If more factions want to add, only are needed some conditionals in set() functions
  */
@@ -14,32 +14,32 @@ class LoadBuildingsCosts
 	private static $loadedBuildingNames = false;
 	private static $loadedBuildingCosts = false;
 	private static $loadedBuildingProperties = false;
-	private static $_buildingNames = array();
-	private static $_buildingCosts = array();
-	private static $_buildingProperties = array();
+	public static $buildingNames = array();
+	public static $buildingCosts = array();
+	public static $buildingProperties = array();
 
 	public static function getbuildingCosts($faction)
 	{
 		if(self::$loadedBuildingCosts && self::$faction == $faction)
 		{
-			return self::$_buildingCosts;
+			return self::$buildingCosts;
 		}else{
-			self::$_buildingCosts = self::setBuildingsCosts($faction);
+			self::$buildingCosts = self::setBuildingsCosts($faction);
 			self::$faction = $faction;
 			self::$loadedBuildingCosts = true;
-			return self::$_buildingCosts;
+			//return self::$buildingCosts;
 		}
 	}
 	public static function getbuildingNames($faction)
 	{
 		if(self::$loadedBuildingNames && self::$faction == $faction)
 		{
-			return self::$_buildingNames;
+			return self::$buildingNames;
 		}else{
-			self::$_buildingNames = self::setBuildingsNames($faction);
+			self::$buildingNames = self::setBuildingsNames($faction);
 			self::$faction = $faction;
 			self::$loadedBuildingNames = true;
-			return self::$_buildingNames;
+			//return self::$buildingNames;
 		}
 	}
 
@@ -47,12 +47,12 @@ class LoadBuildingsCosts
 	{
 		if(self::$loadedBuildingProperties && self::$faction == $faction)
 		{
-			return self::$_buildingProperties;
+			return self::$buildingProperties;
 		}else{
-			self::$_buildingProperties = self::setBuildingsProperties($faction);
+			self::$buildingProperties = self::setBuildingsProperties($faction);
 			self::$faction = $faction;
 			self::$loadedBuildingProperties = true;
-			return self::$_buildingProperties;
+			//return self::$buildingProperties;
 		}
 	}
 

@@ -29,7 +29,9 @@ class BuildingsUtils
 		if($faction == self::$_faction && self::$_buildingNamesSet){
 			$buildings = &self::$_buildingNames;
 		}else{
-			self::$_buildingNames = &LoadBuildingsCosts::getbuildingNames($faction);
+			LoadBuildingsCosts::getbuildingNames($faction);
+			self::$_buildingNames = &LoadBuildingsCosts::$buildingNames;
+			
 			$buildings = &self::$_buildingNames;
 			self::$_faction = $faction;
 			self::$_buildingNamesSet = true;		

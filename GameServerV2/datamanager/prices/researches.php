@@ -3,23 +3,23 @@
 class LoadResearchesCosts
 {
 	private static $faction;
-	private static $_researchesNames = array();
+	public static $researchesNames = array();
 	private static $loadedResearchesNames = false;
-	private static $_researchesCosts = array();
+	public static $researchesCosts = array();
 	private static $loadedResearchesCosts = false;
-	private static $_researchesProperties = array();
+	public static $researchesProperties = array();
 	private static $loadedResearchesProperties = false;
 	
 	public static function getResearchesProperties($faction)
 	{
 		if(self::$loadedResearchesProperties && self::$faction == $faction)
 		{
-			return self::$_researchesProperties;
+			return self::$researchesProperties;
 		}else{
 			self::$faction = $faction;
 			self::$loadedResearchesProperties = true;
-			self::$_researchesProperties = self::setResearchesProperties($faction);
-			return self::$_researchesProperties;
+			self::$researchesProperties = self::setResearchesProperties($faction);
+			//return self::$researchesProperties;
 		}
 	}
 	
