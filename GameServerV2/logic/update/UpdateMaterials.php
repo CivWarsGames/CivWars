@@ -44,8 +44,8 @@ class UpdateMaterials
 
 	private function selectData()
 	{
-		$idUser = DataBaseManager::fetchArray(DataBaseManager::query("SELECT owner_user_id FROM {map} WHERE id =".$this->_cityId));
-		$this->faction = DataBaseManager::fetchArray(DataBaseManager::query("SELECT faction FROM {profile} WHERE user_id = ".$idUser));
+		$idUser = DataBaseManager::fetchArray(DataBaseManager::query("SELECT owner_user_id FROM {map} WHERE box_id =".$this->_cityId));
+		$this->faction = DataBaseManager::fetchArray(DataBaseManager::query("SELECT faction FROM {profile} WHERE user_id = ".$idUser[0]));
 		
 		$this->_materialsInfo = DataBaseManager::fetchArray(DataBaseManager::query("SELECT * FROM {materials}
 		 WHERE city_id = ".$this->_cityId));
@@ -89,11 +89,11 @@ class UpdateMaterials
 
 		//building bonuses
 		//level
-		$level['STEEL_FACTORY'] = BuildingsUtils::getLevel('STEEL_FACTORY', $this->_buildingsInfo);
+		$level['STEEL_FACTORY'] = BuildingsUtils::getLevel('STEEL_FACTORY', $this->_buildingsInfo,$this->_faction);
 		$level['STEEL_FACTORY'] = isset($level['STEEL_FACTORY'][0]) ? $level['STEEL_FACTORY'][0] : 0;
-		$level['REFINERY'] = BuildingsUtils::getLevel('REFINERY', $this->_buildingsInfo);
+		$level['REFINERY'] = BuildingsUtils::getLevel('REFINERY', $this->_buildingsInfo,$this->_faction);
 		$level['REFINERY'] = isset($level['REFINERY'][0]) ? $level['REFINERY'][0] : 0;
-		$level['STOCK_EXCHANGE'] = BuildingsUtils::getLevel('STOCK_EXCHANGE', $this->_buildingsInfo);
+		$level['STOCK_EXCHANGE'] = BuildingsUtils::getLevel('STOCK_EXCHANGE', $this->_buildingsInfo,$this->_faction);
 		$level['STOCK_EXCHANGE'] = isset($level['STOCK_EXCHANGE'][0]) ? $level['STOCK_EXCHANGE'][0] : 0;
 		//bonus
 		$buildingsProperties = &LoadBuildingsCosts::getbuildingProperties($this->faction);	
@@ -155,9 +155,9 @@ class UpdateMaterials
 		//capacites
 		//levels
 		$level = array();
-		$level['WAREHOUSE'] = BuildingsUtils::getLevel('WAREHOUSE', $this->_buildingsInfo);
+		$level['WAREHOUSE'] = BuildingsUtils::getLevel('WAREHOUSE', $this->_buildingsInfo,$this->_faction);
 
-		$level['BANK'] = BuildingsUtils::getLevel('BANK', $this->_buildingsInfo);
+		$level['BANK'] = BuildingsUtils::getLevel('BANK', $this->_buildingsInfo,$this->_faction);
 
 		//basic capacity
 		$capacity['WAREHOUSE'] = 500;
@@ -178,7 +178,7 @@ class UpdateMaterials
 
 		//store the data that the theme will need
 		if(User::get_currentCityId() == $this->_cityId){
-			require_once APP.'logic/VarCollector.php';
+			require_once APP.'presentation/VarsContainer.php';
 			$quantities['METAL'] = floor($quantity['METAL']);
 			$quantities['OIL'] = floor($quantity['OIL']);
 			$quantities['GOLD'] = floor($quantity['GOLD']);
@@ -193,9 +193,9 @@ class UpdateMaterials
 			$hourProductions['ENERGY_DIRTY'] = floor($hourProduction['ENERGY']);						
 			$hourProductions['ENERGY'] = floor($hourProduction['ENERGY'] - $realEnergyCost);			
 			
-			VarCollector::setMaterialVars('QUANTITY', $quantities);
-			VarCollector::setMaterialVars('CAPACITY', $capacities);
-			VarCollector::setMaterialVars('HOUR_PRODUCTION', $hourProductions);		
+			VarsContainer::setMaterialVars('QUANTITY', $quantities);
+			VarsContainer::setMaterialVars('CAPACITY', $capacities);
+			VarsContainer::setMaterialVars('HOUR_PRODUCTION', $hourProductions);		
 		}
 	}
 

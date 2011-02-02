@@ -26,13 +26,13 @@ class BuildingsUtils
 	 */
 	public static function getLevel($buildingName,$buildingsDBArray,$faction)
 	{
-		if($faction == $this->_faction && $this->_buildingNamesSet){
+		if($faction == self::$_faction && self::$_buildingNamesSet){
 			$buildings = &self::$_buildingNames;
 		}else{
 			self::$_buildingNames = &LoadBuildingsCosts::getbuildingNames($faction);
 			$buildings = &self::$_buildingNames;
-			$this->_faction = $faction;
-			$this->_buildingNamesSet = true;		
+			self::$_faction = $faction;
+			self::$_buildingNamesSet = true;		
 		}
 		$level = array();
 		$buildingNumber = array_search($buildingName, $buildings);
@@ -51,7 +51,7 @@ class BuildingsUtils
 	 */
 	public static function getTimeBonus($faction, $buildingsDBArray = NULL,$researchDBArray = NULL)
 	{
-		if(is_array(self::$_buildingProperties) && $this->_faction == $faction){
+		if(is_array(self::$_buildingProperties) && self::$_faction == $faction){
 			$buildings = &self::$_buildingProperties;			
 		}else{
 			$this->_faction = $faction;

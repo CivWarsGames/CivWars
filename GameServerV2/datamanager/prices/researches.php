@@ -18,7 +18,7 @@ class LoadResearchesCosts
 		}else{
 			self::$faction = $faction;
 			self::$loadedResearchesProperties = true;
-			self::$_researchesProperties = self::setResearchesProperties();
+			self::$_researchesProperties = self::setResearchesProperties($faction);
 			return self::$_researchesProperties;
 		}
 	}

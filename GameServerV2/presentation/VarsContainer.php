@@ -3,6 +3,7 @@
 class VarsContainer
 {
 	public static $display = array();
+	private static $materials = array();
 	/**
 	 * @var Int[][]
 	 * @return
