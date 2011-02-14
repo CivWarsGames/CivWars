@@ -1,6 +1,5 @@
 <?php
-require_once APP.'presentation/groups/Player.php';
-require_once APP.'presentation/groups/City.php';
+
 
 class VarsContainer
 {
@@ -25,16 +24,22 @@ class VarsContainer
             break;
             case "BUILDING": self::loadBuildingVars();
             break;
+            case "GAME": self::loadGameVars(); 
+            break;
+            case "GET_POST": self::loadGetPostVars();
         }
 
     }
-    public static function loadObject($type, $id){
+    public static function loadObject($type, $id)
+    {
         if(!is_array(self::$display[$type][$id])){
             switch ($type){
                 case 'PLAYER':
+                    require_once APP.'presentation/groups/Player.php';
                     self::$display[$type][$id] = Player::loadPlayerInfo($id);
                     break;
                 case 'CITY':
+                    require_once APP.'presentation/groups/City.php';                  
                     self::$display[$type][$id] = City::loadCityInfo($id);
             }
         }
@@ -48,9 +53,24 @@ class VarsContainer
         self::$material[$key] = $value;
 
     }
-    private static function loadBuildingVars(){
+    private static function loadBuildingVars()
+    {
         require_once APP.'presentation/groups/Building.php';
         Buildings::LoadInfo();
         self::$display['BUILDING'] = &Buildings::$buildingsInfo;
+    }
+    private static function loadGameVars()
+    {
+        require_once 'presentation/groups/Game';
+        if(!is_array(self::$display['GAME'])){
+            Game::loadGameInfo();
+            self::$display['GAME'] = &Game::$gameInfo;
+        }
+    }
+    private static function loadGetPostVars(){
+        if(!is_array(self::$display['GET'])){
+            self::$display['GET'] = &$_GET;
+            self::$display['POST'] = &$_POST;
+        }
     }
 }
