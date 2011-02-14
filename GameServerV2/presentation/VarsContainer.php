@@ -1,5 +1,5 @@
 <?php
-
+require_once APP.'presentation/groups/Player.php';
 class VarsContainer
 {
     public static $display = array();
