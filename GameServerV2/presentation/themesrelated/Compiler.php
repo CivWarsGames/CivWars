@@ -1,6 +1,6 @@
 <?php
 if(!defined('APP')){
-	require_once '../../../pathBuilder.php';
+    require_once '../../../pathBuilder.php';
 }
 require_once 'CodeParser.php';
 
@@ -12,86 +12,86 @@ require_once 'CodeParser.php';
  */
 class Compiler extends CodeParser
 {
-	/**
-	 *
-	 * Parses the html code
-	 * @param String $file
-	 */
-	public function __construct($themeName)
-	{
-		if($themeName!=""){
-			$themeName .= "/";
-		}
+    /**
+     *
+     * Parses the html code
+     * @param String $file
+     */
+    public function __construct($themeName)
+    {
+        if($themeName!=""){
+            $themeName .= "/";
+        }
 
-		$this->tplRoot = HOME."themes/".$themeName;
-		if(!@opendir($this->tplRoot."php")){
-			//CustomException no mkdir handler
-			mkdir($this->tplRoot."php");
-		}
-		$srcRoot = $this->tplRoot."src/";
-		$this->compileFolder($srcRoot);
+        $this->tplRoot = HOME."themes/".$themeName;
+        if(!@opendir($this->tplRoot."php")){
+            //CustomException no mkdir handler
+            mkdir($this->tplRoot."php");
+        }
+        $srcRoot = $this->tplRoot."src/";
+        $this->compileFolder($srcRoot);
 
-	}
+    }
 
-	protected function compileTagInclude($tagArgs)
-	{
-		// Process var includes
-		if (mb_ereg("^[A-Z0-9\-_]+$", $tagArgs))
-		{
-			return "require_once(APP.'presentation/VarsContainer.php');
+    protected function compileTagInclude($tagArgs)
+    {
+        // Process var includes
+        if (mb_ereg("^[A-Z0-9\-_]+$", $tagArgs))
+        {
+            return "require_once(APP.'presentation/VarsContainer.php');
 			 VarsContainer::load('$tagArgs');";
-		}
+        }
 
-		return " require_once('$tagArgs'.php);";
-	}
+        return " require_once('$tagArgs'.php);";
+    }
 
-	protected function compileFolder($folder)
-	{
-		if ($handle = opendir($folder)) {
-			while (false !== ($file = readdir($handle))) {
-				if($file!= '.' && $file!='..'){
-					$this->filename[] =$file;
-					$this->compileFile($file);
-				}
-			}
-			closedir($handle);
-		}
-	}
+    protected function compileFolder($folder)
+    {
+        if ($handle = opendir($folder)) {
+            while (false !== ($file = readdir($handle))) {
+                if($file!= '.' && $file!='..'){
+                    $this->filename[] =$file;
+                    $this->compileFile($file);
+                }
+            }
+            closedir($handle);
+        }
+    }
 
-	protected function compileFile($file)
-	{
-		$code = $this->getFileContent($file);
-		$compilatedCode = $this->parseContent($code);
-		$this->compileWrite($file, $compilatedCode);
-	}
+    protected function compileFile($file)
+    {
+        $code = $this->getFileContent($file);
+        $compilatedCode = $this->parseContent($code);
+        $this->compileWrite($file, $compilatedCode);
+    }
 
-	/**
-	 * Write compiled file to cache directory
-	 */
-	private function compileWrite($handle, $data)
-	{
-		$filename = $this->tplRoot."php/".$handle.".php";
+    /**
+     * Write compiled file to cache directory
+     */
+    private function compileWrite($handle, $data)
+    {
+        $filename = $this->tplRoot."php/".$handle.".php";
 
-		if ($fp = @fopen($filename, 'wb'))
-		{
-			@flock($fp, LOCK_EX);
-			@fwrite ($fp, $data);
-			@flock($fp, LOCK_UN);
-			@fclose($fp);
+        if ($fp = @fopen($filename, 'wb'))
+        {
+            @flock($fp, LOCK_EX);
+            @fwrite ($fp, $data);
+            @flock($fp, LOCK_UN);
+            @fclose($fp);
 
-			chmod($filename, 0777);		//TODO look chmods
+            chmod($filename, 0777);		//TODO look chmods
 
-		}
+        }
 
-		return;
-	}
+        return;
+    }
 
-	/**
-	 * We only declare this function (dirty?) ;)
-	 */
-	protected function tplInclude($filename){
+    /**
+     * We only declare this function (dirty?) ;)
+     */
+    protected function tplInclude($filename){
 
-	}
+    }
 
 
 

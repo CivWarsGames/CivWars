@@ -22,8 +22,18 @@ class VarsContainer
             case "MATERIAL": self::loadMaterialVars();
             break;
             case "BUILDING": self::loadBuildingVars();
+            break;
         }
-        
+
+    }
+    public static function loadObject($type, $id){
+        if(!is_array(self::$display[$type][$id])){
+            switch ($type){
+                case 'PLAYER':
+                    self::$display[$type][$id] = Player::loadPlayerInfo($id);
+                    break;
+            }
+        }
     }
     private static function loadMaterialVars()
     {
@@ -35,7 +45,7 @@ class VarsContainer
 
     }
     private static function loadBuildingVars(){
-        require_once APP.'presentation/buildings/Buildings.php';
+        require_once APP.'presentation/groups/Building.php';
         Buildings::LoadInfo();
         self::$display['BUILDING'] = &Buildings::$buildingsInfo;
     }
