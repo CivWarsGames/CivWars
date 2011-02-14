@@ -13,7 +13,7 @@ class CodeParser
     protected $filename = array();
     protected $tplRoot = '';
     protected $block_names = array();
-    private $groupList = array("'PLAYER'");//The list of the groups that need search
+    private $groupList = array("'PLAYER'","'CITY'","'ALY'","'BOX'");//The list of the groups that need search
     private $lastSubStringSize; //The size of the last "VarsContainer::loadObject(sth,sth)"
 
     protected function getFileContent($file)

@@ -1,5 +1,7 @@
 <?php
 require_once APP.'presentation/groups/Player.php';
+require_once APP.'presentation/groups/City.php';
+
 class VarsContainer
 {
     public static $display = array();
@@ -32,6 +34,8 @@ class VarsContainer
                 case 'PLAYER':
                     self::$display[$type][$id] = Player::loadPlayerInfo($id);
                     break;
+                case 'CITY':
+                    self::$display[$type][$id] = City::loadCityInfo($id);
             }
         }
     }

@@ -36,6 +36,6 @@ class Player
         return $result;
     }
     private static function updatePuntuation($id){
-        
+        //TODO this ;)
     }
 }
