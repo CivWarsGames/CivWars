@@ -181,9 +181,9 @@ class CodeParser
                 $this->lastSubStringSize += strlen($insert);
             }
         }
-        foreach ($matches as $key => $value){
+        foreach ($matches2 as $key => $value){
             if(array_search($matches2[$key][1], $this->groupList) !== false){
-                $insert = "<?php VarsContainer::loadObject(".$matches2[$key][1].",".$matches2[$key][2].");?>";
+                $insert = "<?php VarsContainer::loadObject(".$matches2[$key][1].",".$matches2[$key][2].",".$matches2[$key][3].");?>";
                 $start = substr($textBlocks,0,$this->lastSubStringSize);
                 $end = substr($textBlocks,$this->lastSubStringSize);
                 $textBlocks = $start.$insert.$end;

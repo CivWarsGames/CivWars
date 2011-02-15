@@ -24,13 +24,13 @@ class VarsContainer
             break;
             case "BUILDING": self::loadBuildingVars();
             break;
-            case "GAME": self::loadGameVars(); 
+            case "GAME": self::loadGameVars();
             break;
             case "GET_POST": self::loadGetPostVars();
         }
 
     }
-    public static function loadObject($type, $id)
+    public static function loadObject($type, $id, $t3 = NULL)
     {
         if(!is_array(self::$display[$type][$id])){
             switch ($type){
@@ -39,8 +39,14 @@ class VarsContainer
                     self::$display[$type][$id] = Player::loadPlayerInfo($id);
                     break;
                 case 'CITY':
-                    require_once APP.'presentation/groups/City.php';                  
+                    require_once APP.'presentation/groups/City.php';
                     self::$display[$type][$id] = City::loadCityInfo($id);
+                case 'MESSAGES':
+                    if($t3 != "IN" || $t3 != "OUT" || $id >= 100){
+                        require_once APP.'presentation/groups/Messages.php';
+                        self::$display[$type][$id] = Messages::getMessages($id,$t3);
+                    }
+
             }
         }
     }

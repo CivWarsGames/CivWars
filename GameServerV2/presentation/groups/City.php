@@ -27,6 +27,7 @@ class City
 
     }
     private static function loadFromName($id){
+        $id = Parser::characterTraductor($id);
         $resultn = DataBaseManager::fetchArray(DataBaseManager::query("SELECT owner_city_id FROM {map} WHERE city_name = '$id'"));
         $result['ID'] = $resultn[0];
         return $result;

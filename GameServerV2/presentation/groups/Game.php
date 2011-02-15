@@ -15,5 +15,4 @@ class Game
         self::$gameInfo['SERVER']['TIME'][1] = Timer::uNIXToDate(time());
     }    
 }
-
 ?>

@@ -6,8 +6,8 @@
 </head>
 <body>
 <?php require_once(APP.'presentation/VarsContainer.php');
-			 VarsContainer::load('PLAYER'); VarsContainer::loadObject('PLAYER','des');?><?php VarsContainer::loadObject('PLAYER',VarsContainer::$display['PLAYER']['des']['NAME']);?><?php VarsContainer::loadObject('PLAYER',VarsContainer::$display['PLAYER']['des']['NAME']);?> 
-<?php echo VarsContainer::$display['PLAYER'][VarsContainer::$display['PLAYER']['des']['NAME']]['NAME']['555'];?>
+			 VarsContainer::load('PLAYER'); VarsContainer::loadObject('PLAYER','des','NAME');?><?php VarsContainer::loadObject('PLAYER',VarsContainer::$display['PLAYER']['des']['NAME']['556']);?><?php VarsContainer::loadObject('PLAYER',VarsContainer::$display['PLAYER']['des']['NAME']['556'],'NAME');?> 
+<?php echo VarsContainer::$display['PLAYER'][VarsContainer::$display['PLAYER']['des']['NAME']['556']]['NAME']['555'];?>
 
 
  <?php VarsContainer::loadObject('PLAYER','ses');?><?php if ((VarsContainer::$display['PLAYER']['ses']['Sas']) == (VarsContainer::$display['COOL']['POS']['NAM'])) {  ?> 
