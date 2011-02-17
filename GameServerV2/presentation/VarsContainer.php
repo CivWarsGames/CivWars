@@ -27,6 +27,7 @@ class VarsContainer
             case "GAME": self::loadGameVars();
             break;
             case "GET_POST": self::loadGetPostVars();
+            break;
         }
 
     }
@@ -41,12 +42,13 @@ class VarsContainer
                 case 'CITY':
                     require_once APP.'presentation/groups/City.php';
                     self::$display[$type][$id] = City::loadCityInfo($id);
+                    break;
                 case 'MESSAGES':
                     if($t3 != "IN" || $t3 != "OUT" || $id >= 100){
                         require_once APP.'presentation/groups/Messages.php';
                         self::$display[$type][$id] = Messages::getMessages($id,$t3);
                     }
-
+                    break;
             }
         }
     }
@@ -57,7 +59,6 @@ class VarsContainer
     public static function setMaterialVars($key,$value)
     {
         self::$material[$key] = $value;
-
     }
     private static function loadBuildingVars()
     {

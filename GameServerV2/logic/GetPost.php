@@ -21,18 +21,29 @@ class GetPost
 			case 'ajax':
 				require_once APP.'presentation/AJAXHandler.php';
 				$got = new AJAXHandler($_GET[$key]);
-				break;
-			
-			case 'page':
-				require_once APP.'presentation/PageHandler.php';
-				$got = new PageHandler($_GET[$key]);	
-				break;
-				
+				break;			
 			case 'upgrade':
 				require_once APP.'logic/modify/upgrade/UpgradeHandler.php';	
 				$got = new Upgrade();
 				break;
-			
+			case 'send':
+			    require_once APP.'logic/modify/sendtroops/TroopsSender.php';
+			    $got = new TroopsSender();
+			    break;
+			case 'profile':
+			    require_once APP.'logic/modify/profile/ProfilesHandler.php';
+			    $got = new ProfilesHandler;
+			    break;
+			case 'message':
+			    require_once APP.'logic/modify/messages/Messenger.php';
+			    $got = new Messenger();
+			    break;
+			    //add here
+			    
+            case 'page':
+                require_once APP.'presentation/PageHandler.php';
+                $got = new PageHandler($_GET[$key]);    
+                break;			
 			case 'logout':
 				require_once APP.'Play.php';
 				if($session = Play::get_session()){
