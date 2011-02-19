@@ -10,20 +10,23 @@ class BuildingsUpgrader extends MaterialSubstractor
     {
         $plotNumber = $_GET['building'];
         if(Parser::onlyNumbersString($plotNumber)){
-        $result = DataBaseManager::fetchArray(DataBaseManager::query("SELECT current_improvement,type_".$plotNumber.", level_".$plotNumber." FROM {buildings} WHERE city_id =".User::get_currentCityId()));
+        $result = DataBaseManager::fetchArray(DataBaseManager::query("SELECT * FROM {buildings} WHERE city_id =".User::get_currentCityId()));
         $this->level = $result['level_'.$plotNumber];
         $this->type = $result['type_'.$plotNumber];
             if(($this->type != 0 || array_search($_GET['building_name'], $buildingNames) !== false) && $result['current_improvement'] == 0){
                 $this->loadSubstractor();
                 $this->readCosts($plotNumber);
                 if($this->lookIfPossible()){
+                    //time bonus
+                    $timeBonus = BuildingsUtils::getTimeBonus($this->faction,$result);
+                    $timeCost = $this->costs[5]*$timeBonus;
                     if($this->type == 0){
                         DataBaseManager::query("UPDATE {buildings} SET current_improvement = $plotNumber,
-                         finish_time".Timer::addUNIXTime($this->costs[5]).", type_".$plotNumber." = ".array_search($_GET['building_name'], $buildingNames)." 
+                         finish_time".Timer::addUNIXTime($timeCost).", type_".$plotNumber." = ".array_search($_GET['building_name'], $buildingNames)." 
                          WHERE city_id = ".User::get_currentCityId());
                     }else{
                         DataBaseManager::query("UPDATE {buildings} SET current_improvement = $plotNumber,
-                         finish_time".Timer::addUNIXTime($this->costs[5])." WHERE city_id = ".User::get_currentCityId());
+                         finish_time".Timer::addUNIXTime($timeCost)." WHERE city_id = ".User::get_currentCityId());
                     }
                     $this->substractMaterials();
                 }

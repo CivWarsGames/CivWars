@@ -1,0 +1,10 @@
+<?php  require_once(''.php); VarsContainer::loadObject('PLAYER','1');?><?php VarsContainer::loadObject('PLAYER','1');?><?php VarsContainer::loadObject('PLAYER','1','CITY_ID');?><?php VarsContainer::loadObject('PLAYER',VarsContainer::$display['PLAYER']['1']['CITIES_NUMBER']);?><?php VarsContainer::loadObject('PLAYER',VarsContainer::$display['PLAYER']['1']['CITIES_NUMBER']);?><?php VarsContainer::loadObject('PLAYER',VarsContainer::$display['PLAYER']['1']['CITIES_NUMBER'],'CITY_ID');?><?php VarsContainer::loadObject('PLAYER',VarsContainer::$display['PLAYER'][VarsContainer::$display['PLAYER']['1']['CITIES_NUMBER']]['CITY_ID']['0']);?><?php VarsContainer::loadObject('PLAYER',VarsContainer::$display['PLAYER'][VarsContainer::$display['PLAYER'][VarsContainer::$display['PLAYER']['1']['CITIES_NUMBER']]['CITY_ID']['0']]['CITIES_NUMBER']);?><?php VarsContainer::loadObject('PLAYER',VarsContainer::$display['PLAYER'][VarsContainer::$display['PLAYER'][VarsContainer::$display['PLAYER']['1']['CITIES_NUMBER']]['CITY_ID']['0']]['CITIES_NUMBER'],'PROFILE');?> 
+<?php echo VarsContainer::$display['PLAYER'][VarsContainer::$display['PLAYER']['1']['CITIES_NUMBER']]['NAME'];?><br />
+<?php echo VarsContainer::$display['PLAYER'][VarsContainer::$display['PLAYER'][VarsContainer::$display['PLAYER'][VarsContainer::$display['PLAYER']['1']['CITIES_NUMBER']]['CITY_ID']['0']]['CITIES_NUMBER']]['PROFILE']['THEME_NAME'];?>
+
+<?php echo VarsContainer::$display['PLAYER']['1']['CITY_ID']['0'];?>
+
+ <?php VarsContainer::loadObject('PLAYER','1');?><?php if (isset( VarsContainer::$display['PLAYER']['1']['CITIES_NUMBER'])) {for ($_i = 0; $_i <  VarsContainer::$display['PLAYER']['1']['CITIES_NUMBER']; $_i++){ VarsContainer::loadObject('PLAYER','klaus23');?> 
+<?php echo VarsContainer::$display['PLAYER']['klaus23']['ID'];?>
+
+<?php }} ?>
