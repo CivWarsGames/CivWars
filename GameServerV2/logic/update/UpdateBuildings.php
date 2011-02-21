@@ -38,7 +38,6 @@ class UpdateBuildings
         [$this->info['level_'.$this->info['current_improvement']]][4];
         $this->maintenanceCosts['energy_cost'] += $this->buildingCosts[$this->buildingNames[$this->info['current_improvement']]]
         [$this->info['level_'.$this->info['current_improvement']]][3];
-
     }
     private function updateUser()
     {
@@ -56,7 +55,6 @@ class UpdateBuildings
          WHERE city_id = ".$this->info['city_id']);
         }         
     }
-
 }
 
 

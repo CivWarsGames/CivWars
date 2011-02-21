@@ -51,7 +51,7 @@ class BuildingsUtils
 	 * Gets the time bonus of a city
 	 * @return Int The time bonus
 	 */
-	public static function getTimeBonus($faction, $buildingsDBArray = NULL,$researchDBArray = NULL)
+	public static function getTimeBonus($faction = NULL, $buildingsDBArray = NULL,$researchDBArray = NULL)
 	{
 		if(is_array(self::$_buildingProperties) && self::$_faction == $faction){
 			$buildings = &self::$_buildingProperties;			
@@ -60,6 +60,9 @@ class BuildingsUtils
 			self::$_buildingProperties = &LoadBuildingsCosts::getbuildingProperties($faction);
 			$buildings = &self::$_buildingProperties;
 			
+		}
+		if($faction == NULL){
+		    $faction = User::get_faction();
 		}
 		if($buildingsDBArray == NULL){
 			$buildingsDBArray = DataBaseManager::fetchArray(DataBaseManager::query("SELECT * FROM {buildings} WHERE city_id =".User::get_currentCityId()));
