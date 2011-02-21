@@ -22,7 +22,16 @@ class LoadResearchesCosts
 			//return self::$researchesProperties;
 		}
 	}
-	
+	public static function setResearchesCosts($faction)
+	{
+	    
+	    
+	}
+	private static function setResearchesCosts($faction)
+	{
+	    //metal,oil,gold
+	    return $c;
+	}
 	private static function setResearchesProperties($faction)
 	{
 		//Factor that multiplies the production 
