@@ -13,6 +13,7 @@ class ResearchUpgrader extends MaterialSubstractor
             $this->loadSubstractor();
             $this->readCosts($researchName);
             if($this->lookIfPossible()){
+                $researchName = strtolower($researchName);
                 $timeCost = $this->costs[3] * $this->calculateTimeBonus()/SERVER_SPEED_RATE;
                 DataBaseManager::query("UPDATE {research} SET current_research = '$researchName',
                  finish_time = ".Timer::addUNIXTime($timeCost)." WHERE user_id = ".User::get_idUser());
@@ -22,7 +23,7 @@ class ResearchUpgrader extends MaterialSubstractor
     }
     private function readCosts($researchName)
     {
-        LoadResearchesCosts::setResearchesCosts(User::get_faction());
+        LoadResearchesCosts::getResearchesCosts(User::get_faction());
         $this->costs = &LoadResearchesCosts::$researchesCosts[$researchName];
     }
     private function calculateTimeBonus()

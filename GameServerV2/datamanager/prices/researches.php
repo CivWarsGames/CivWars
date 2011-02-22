@@ -22,7 +22,11 @@ class LoadResearchesCosts
 			//return self::$researchesProperties;
 		}
 	}
-	public static function setResearchesCosts($faction)
+	public static function getResearchesCosts($faction)
+	{
+	    
+	}
+	private static function setResearchesCosts($faction)
 	{
 	    
 	    

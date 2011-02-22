@@ -34,7 +34,7 @@ class GetPost
 			    require_once APP.'logic/modify/profile/ProfilesHandler.php';
 			    $got = new ProfilesHandler;
 			    break;
-			case 'message':
+			case 'messages':
 			    require_once APP.'logic/modify/messages/Messenger.php';
 			    $got = new Messenger();
 			    break;

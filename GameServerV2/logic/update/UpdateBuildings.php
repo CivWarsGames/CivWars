@@ -30,7 +30,7 @@ class UpdateBuildings
         LoadBuildingsCosts::getbuildingNames($faction);
         $this->buildingNames = &LoadBuildingsCosts::$buildingNames;
         $this->maintenanceCosts = DataBaseManager::fetchArray(DataBaseManager::query("SELECT buildings_maintenance, energy_cost FROM
-        {buildings} WHERE city_id = ".$this->buildingCosts['city_id']));
+        {buildings} WHERE city_id = ".$this->info['city_id']));
     }
     private function calculateCosts()
     {
