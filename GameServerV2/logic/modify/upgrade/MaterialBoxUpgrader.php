@@ -1,8 +1,8 @@
 <?php
 class MaterialBoxUpgrader extends MaterialSubstractor
 {
-    private $mapInfo;
-    private $materialsInfo;
+    private $mapInfo = array();
+    private $materialsInfo = array();
     
     public function MaterialBoxUpgrader()
     {

@@ -3,7 +3,7 @@ require_once APP.'logic/modify/MaterialSubstractor.php';
 
 class ResearchUpgrader extends MaterialSubstractor
 {
-    private $research;
+    private $research = array();
     public function ResearchUpgrader(){
         $researchName = $_GET['research'];
         $this->research = DataBaseManager::fetchArray(DataBaseManager::query("SELECT current_research, $researchName FROM {research} WHERE
