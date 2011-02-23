@@ -34,7 +34,7 @@ class User
         return self::$_currentCityId;
     }
     public static function get_faction(){
-        return self::$_faction;    
+        return self::$_faction;
     }
 
 
@@ -44,9 +44,13 @@ class User
      */
     public static function change_currentCityId($newCityId)
     {
-        /*
-         * TODO ensure that the user is the owner of that base
-         */
+        if(Parser::onlyNumbersString($newCityId)){
+            $result = DataBaseManager::query("SELECT user_id FROM {buildings} WHERE city_id = $newCityId and user_id = ".self::$_idUser);
+            if(DataBaseManager::numRows($result) > 0){
+                setcookie("city", $newCityId); 
+                DataBaseManager::query("UPDATE {users} SET current_city_id = $newCityId WHERE user_id = ".self::$_idUser);
+            }
+        }
     }
 
     /**
