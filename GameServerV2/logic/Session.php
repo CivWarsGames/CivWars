@@ -4,6 +4,7 @@ if(!defined('APP')){
 }
 require_once 'User.php';
 require_once APP.'datamanager/DataBaseManager.php';
+require_once APP.'logic/tools/Parser.php';
 
 /**
  * Session class, mantains the session and stores the user ID in a $_SESSION var

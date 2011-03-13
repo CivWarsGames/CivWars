@@ -24,7 +24,7 @@ class GetPost
 				break;			
 			case 'upgrade':
 				require_once APP.'logic/modify/upgrade/UpgradeHandler.php';	
-				$got = new Upgrade();
+				$got = new UpgradeHandler();
 				break;
 			case 'send':
 			    require_once APP.'logic/modify/sendtroops/TroopsSender.php';

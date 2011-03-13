@@ -2,8 +2,8 @@
 if(!defined('APP')){
 require_once '../../pathBuilder.php';
 }
-/*require_once APP.'logic/update/updateall/UpdateBuildings.php';
-require_once APP.'logic/update/updateall/UpdateMaterialBoxes.php';
+require_once APP.'logic/update/UpdateBuildings.php';
+/*require_once APP.'logic/update/updateall/UpdateMaterialBoxes.php';
 require_once APP.'logic/update/updateall/UpdateResearch.php';*/
 require_once APP.'logic/update/UpdateMaterials.php';
 require_once APP.'logic/User.php';
@@ -13,7 +13,7 @@ class UpdateCity
 {
 	public function UpdateCity()
 	{
-		//$updateBuildings = new UpdateBuildings();
+		 new UpdateBuildings();
 		//$updateMateralBoxes = new UpdateMaterialBoxes();
 		//$updateResearch = new UpdateResearch();
 		

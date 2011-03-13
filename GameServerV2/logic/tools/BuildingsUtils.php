@@ -56,7 +56,7 @@ class BuildingsUtils
 		if(is_array(self::$_buildingProperties) && self::$_faction == $faction){
 			$buildings = &self::$_buildingProperties;			
 		}else{
-			$this->_faction = $faction;
+			self::$_faction = $faction;
 			self::$_buildingProperties = &LoadBuildingsCosts::getbuildingProperties($faction);
 			$buildings = &self::$_buildingProperties;
 			
@@ -72,7 +72,7 @@ class BuildingsUtils
 			WHERE user_id = ".User::get_idUser()));
 		}
 		$bonus = 1;
-		$level = self::getLevel('COMMAND_CENTER', $buildingsDBArray);
+		$level = self::getLevel('COMMAND_CENTER', $buildingsDBArray,self::$_faction);
 		if(!isset($level[0])){
 			$level[0] = 0;
 		}

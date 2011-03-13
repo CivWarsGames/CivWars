@@ -1,5 +1,6 @@
 <?php
 require_once APP.'logic/modify/MaterialSubstractor.php';
+require_once APP.'logic/tools/Timer.php';
 
 class BuildingsUpgrader extends MaterialSubstractor
 {
@@ -51,13 +52,14 @@ class BuildingsUpgrader extends MaterialSubstractor
         $buildingCosts = &LoadBuildingsCosts::$buildingCosts;
         if($this->type != 0){
             //max upgraded
-            if($this->level >= count($buildingCosts[$buildingNames[$this->$type]])){
+            if($this->level >= count($buildingCosts[$buildingNames[$this->type]])){
                 $this->costs[0] = $this->materialsStock['METAL'] + 1;
             }else{
-                $this->costs = &$buildingCosts[$buildingNames[$this->$type]][$this->level];
+                $this->costs = &$buildingCosts[$buildingNames[$this->type]][$this->level];
             }
         }else{
             $this->costs = &$buildingCosts[$_GET['building_name']][$this->level];
-        }
+        }       
+        
     }
 }

@@ -1,7 +1,7 @@
 <?php
 class MaterialSubstractor
 {
-    private $costs = array();
+    protected $costs = array();
     private $materialsStock = array();
     private $faction;
 
@@ -18,7 +18,7 @@ class MaterialSubstractor
             $this->materialsStock['METAL'] -= $this->costs[0];
             $this->materialsStock['OIL'] -= $this->costs[1];
             $this->materialsStock['GOLD'] -= $this->costs[2];
-            DataBaseManager::query("UPDATE {materials} SET metal = ".$this->materialsStock['METAL'].", oil = ".$this->materialsStock['oil'].",
+            DataBaseManager::query("UPDATE {materials} SET metal = ".$this->materialsStock['METAL'].", oil = ".$this->materialsStock['OIL'].",
             gold = ".$this->materialsStock['GOLD']." WHERE city_id = ".User::get_currentCityId());
         }
     }
