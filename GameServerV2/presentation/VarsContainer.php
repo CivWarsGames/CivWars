@@ -15,7 +15,7 @@ class VarsContainer
      * $materials[HOUR_PRODUCTION][METAL/OIL/GOLD_DIRTY/GOLD/ENERGY_DIRTY/ENERGY] (dirty is
      * the production before substract the mantenainces and energy costs
      */
-    public static $material = array();
+    public static $material = array();//TODO reupdate material box are set $_GET: upgrade or training or sth that costs materials
 
     public static function load($vars)
     {
@@ -68,7 +68,7 @@ class VarsContainer
     }
     private static function loadGameVars()
     {
-        require_once 'presentation/groups/Game';
+        require_once APP.'presentation/groups/Game.php';
         if(!is_array(self::$display['GAME'])){
             Game::loadGameInfo();
             self::$display['GAME'] = &Game::$gameInfo;
