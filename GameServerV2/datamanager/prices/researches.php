@@ -28,11 +28,6 @@ class LoadResearchesCosts
 	}
 	private static function setResearchesCosts($faction)
 	{
-	    
-	    
-	}
-	private static function setResearchesCosts($faction)
-	{
 	    //metal,oil,gold
 	    return $c;
 	}

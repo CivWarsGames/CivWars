@@ -1,4 +1,6 @@
 <?php
+require_once APP.'logic/modify/MaterialSubstractor.php';
+require_once APP.'logic/tools/Timer.php';
 class MaterialBoxUpgrader extends MaterialSubstractor
 {
     private $mapInfo = array();

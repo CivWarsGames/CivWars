@@ -12,6 +12,5 @@ class LoadTroopCosts
     private static function setTroopCostsProperties($faction)
     {
         
-    }
-    
+    } 
 }

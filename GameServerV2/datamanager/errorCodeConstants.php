@@ -21,6 +21,8 @@ define(MYSQL_QUERY_ERROR,"13");
 define(INVALID_ONLY_NUMBERS_STRING, "21");
 define(INVALID_EMAIL, "22");
 
+/*Updating related*/
+define(TIME_DIFF_LOW_0_UPDATING_MATERIALS, "31");//when final_time - initial_time < 0
 /*Timer related*/
 
 

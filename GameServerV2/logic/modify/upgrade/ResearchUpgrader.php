@@ -8,7 +8,7 @@ class ResearchUpgrader extends MaterialSubstractor
         $researchName = $_GET['research'];
         $this->research = DataBaseManager::fetchArray(DataBaseManager::query("SELECT current_research, $researchName FROM {research} WHERE
          user_id =".User::get_idUser()));
-        if($this->research['current_search'] == 0 && $this->research[$researchName] == 0 && 
+        if($this->research['current_search'] == 0 && $this->research[$researchName] == 0 &&
         $this->isItAvailableTechnologicaly($researchName)){
             $this->loadSubstractor();
             $this->readCosts($researchName);
@@ -35,9 +35,13 @@ class ResearchUpgrader extends MaterialSubstractor
     {
         $researchName = strtolower($researchName);
         $buildingsInfo = DataBaseManager::fetchArray(DataBaseManager::query("SELECT * FROM {buildings} WHERE city_id = ".User::get_currentCityId()));
+        $researchLabLevel = BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo);
+        $researchLabLevel = $researchLabLevel[0];
+        $advancedLabLevel = BuildingsUtils::getLevel('ADVANCED_LAB', $buildingsInfo);
+        $advancedLabLevel = $advancedLabLevel[0];
         switch ($researchName){
             case 'steel':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 1){
+                if($researchLabLevel >= 1){
                     $select = DataBaseManager::query("SELECT box_id FROM {map} WHERE owner_city_id = ".User::get_currentCityId()."
                  AND box_level >=2 AND current_type = 2 AND sieger_city_id = 0");
                     if(DataBaseManager::numRows($select) > 0){
@@ -46,7 +50,7 @@ class ResearchUpgrader extends MaterialSubstractor
                 }
                 break;
             case 'electricity':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 1){
+                if($researchLabLevel >= 1){
                     $select = DataBaseManager::query("SELECT box_id FROM {map} WHERE owner_city_id = ".User::get_currentCityId()."
                  AND box_level >=2 AND current_type = 5 AND sieger_city_id = 0");
                     if(DataBaseManager::numRows($select) > 0){
@@ -55,52 +59,52 @@ class ResearchUpgrader extends MaterialSubstractor
                 }
                 break;
             case 'assembly_line':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 2 && $this->research['electricity'] == 1){
+                if($researchLabLevel >= 2 && $this->research['electricity'] == 1){
                     return true;
                 }
                 break;
             case 'reinforced_concrete':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 2 && $this->research['steel'] == 1){
+                if($researchLabLevel >= 2 && $this->research['steel'] == 1){
                     return true;
                 }
                 break;
             case 'radio':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 3 && $this->research['electricity'] == 1){
+                if($researchLabLevel >= 3 && $this->research['electricity'] == 1){
                     return true;
                 }
                 break;
             case 'reciprocating_engine':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 3 && $this->research['electricity'] == 1 && $this->research['steel'] == 1){
+                if($researchLabLevel >= 3 && $this->research['electricity'] == 1 && $this->research['steel'] == 1){
                     return true;
                 }
                 break;
             case 'armor':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 5 && $this->research['steel'] == 1){
+                if($researchLabLevel >= 5 && $this->research['steel'] == 1){
                     return true;
                 }
                 break;
             case 'artillery':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 6 && $this->research['armor'] == 1 && $this->research['steel'] == 1){
+                if($researchLabLevel >= 6 && $this->research['armor'] == 1 && $this->research['steel'] == 1){
                     return true;
                 }
                 break;
             case 'fly':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 10 && $this->research['reciprocating_engine'] == 1 && $this->research['radio'] == 1 && $this->research['armor'] == 1){
+                if($researchLabLevel >= 10 && $this->research['reciprocating_engine'] == 1 && $this->research['radio'] == 1 && $this->research['armor'] == 1){
                     return true;
                 }
                 break;
             case 'espionage':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 4){
+                if($researchLabLevel >= 4){
                     return true;
                 }
                 break;
             case 'computers_I':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 5 && $this->research['electricity'] == 1){
+                if($researchLabLevel >= 5 && $this->research['electricity'] == 1){
                     return true;
                 }
                 break;
             case 'computers_II':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 12  &&  $this->research['plastic'] == 1 &&  $this->research['computers_I'] == 1){
+                if($researchLabLevel >= 12  &&  $this->research['plastic'] == 1 &&  $this->research['computers_I'] == 1){
                     return true;
                 }
                 break;
@@ -126,46 +130,46 @@ class ResearchUpgrader extends MaterialSubstractor
                 }
                 break;
             case 'titanium':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 7  &&  $this->research['improved_metal_extraction'] == 1){
+                if($researchLabLevel >= 7  &&  $this->research['improved_metal_extraction'] == 1){
                     return true;
                 }
                 break;
             case 'plastic':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 7  &&  $this->research['improved_oil_extraction'] == 1){
+                if($researchLabLevel >= 7  &&  $this->research['improved_oil_extraction'] == 1){
                     return true;
                 }
                 break;
             case 'jet_engine':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 9  &&  $this->research['titanium'] == 1){
+                if($researchLabLevel >= 9  &&  $this->research['titanium'] == 1){
                     return true;
                 }
                 break;
             case 'robots':
-                if(BuildingsUtils::getLevel('ADVANCED_LAB', $buildingsInfo) >= 3   &&  $this->research['computers_II'] == 1 &&
+                if($advancedLabLevel >= 3   &&  $this->research['computers_II'] == 1 &&
                 $this->research['reciprocating_engine'] == 1 &&  $this->research['plastic'] == 1 && $this->research['titanium'] == 1 ){
                     return true;
                 }
                 break;
             case 'optic_fiber':
-                if(BuildingsUtils::getLevel('ADVANCED_LAB', $buildingsInfo) >= 5   &&  $this->research['computers_II'] == 1 &&
+                if($advancedLabLevel >= 5   &&  $this->research['computers_II'] == 1 &&
                 $this->research['plastic'] == 1 && $this->research['titanium'] == 1 ){
                     return true;
                 }
                 break;
             case 'satellites':
-                if(BuildingsUtils::getLevel('ADVANCED_LAB', $buildingsInfo) >= 7   &&  $this->research['computers_II'] == 1 &&
+                if($advancedLabLevel >= 7   &&  $this->research['computers_II'] == 1 &&
                 $this->research['plastic'] == 1 && $this->research['titanium'] == 1 && $this->research['optic_fiber'] == 1
                 && $this->research['fission_nuclear_energy'] == 1 ){
                     return true;
                 }
                 break;
             case 'genetics':
-                if(BuildingsUtils::getLevel('ADVANCED_LAB', $buildingsInfo) >= 9 ){
+                if($advancedLabLevel >= 9 ){
                     return true;
                 }
                 break;
             case 'thermal_energy':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 1){
+                if($researchLabLevel >= 1){
                     $select = DataBaseManager::query("SELECT box_id FROM {map} WHERE owner_city_id = ".User::get_currentCityId()."
                  AND box_level >=4 AND current_type = 5 AND sieger_city_id = 0");
                     if(DataBaseManager::numRows($select) > 0){
@@ -178,7 +182,7 @@ class ResearchUpgrader extends MaterialSubstractor
                 }
                 break;
             case 'solar_energy':
-                if(BuildingsUtils::getLevel('RESEARCH_LAB', $buildingsInfo) >= 3 &&  $this->research['electricity'] == 1 &&  $this->research['steel'] == 1){
+                if($researchLabLevel >= 3 &&  $this->research['electricity'] == 1 &&  $this->research['steel'] == 1){
                     $select = DataBaseManager::query("SELECT box_id FROM {map} WHERE owner_city_id = ".User::get_currentCityId()."
                  AND box_level >=2 AND current_type = 5 AND sieger_city_id = 0");
                     if(DataBaseManager::numRows($select) > 0){
@@ -187,7 +191,7 @@ class ResearchUpgrader extends MaterialSubstractor
                 }
                 break;
             case 'fission_nuclear_energy':
-                if(BuildingsUtils::getLevel('ADVANCED_LAB', $buildingsInfo) >= 1){
+                if($advancedLabLevel >= 1){
                     $select = DataBaseManager::query("SELECT box_id FROM {map} WHERE owner_city_id = ".User::get_currentCityId()."
                  AND box_level >= 16 AND current_type = 5 AND sieger_city_id = 0");
                     if(DataBaseManager::numRows($select) > 0){
@@ -196,7 +200,7 @@ class ResearchUpgrader extends MaterialSubstractor
                 }
                 break;
             case 'fusion_nuclear_energy':
-                if(BuildingsUtils::getLevel('ADVANCED_LAB', $buildingsInfo) >= 15){
+                if($advancedLabLevel >= 15){
                     $select = DataBaseManager::query("SELECT box_id FROM {map} WHERE owner_city_id = ".User::get_currentCityId()."
                  AND box_level >= 22 AND current_type = 5 AND sieger_city_id = 0");
                     if(DataBaseManager::numRows($select) > 0){

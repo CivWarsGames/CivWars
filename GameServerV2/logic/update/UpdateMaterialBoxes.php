@@ -11,7 +11,7 @@ class UpdateMaterialBoxes
     public function  UpdateMaterialBoxes()
     {
         $results = DataBaseManager::query("SELECT * FROM {materials} WHERE mat_box_id_cur_improvement <> 0 and
-         mat_box_finish_time <= NOW ");
+         mat_box_finish_time <= NOW() ");
         while($result = DataBaseManager::fetchArray($results)){
             $this->info = &$result;
             $this->selectInfo();
@@ -21,12 +21,13 @@ class UpdateMaterialBoxes
     }
     private function selectInfo()
     {
+        $faction = DataBaseManager::fetchArray(DataBaseManager::query("SELECT faction FROM {profile} WHERE user_id = ".$this->info['user_id']));
         $this->boxInfo = DataBaseManager::fetchArray(DataBaseManager::query("SELECT current_type, box_level, sieger_city_id FROM {map} WHERE
         box_id = ".$this->info['mat_box_id_cur_improvement']));
-        LoadMaterialsCosts::getmaterialCosts(User::get_faction());
-        LoadMaterialsCosts::getmaterialNames(User::get_faction());
+        LoadMaterialsCosts::getmaterialCosts($faction[0]);
+        LoadMaterialsCosts::getmaterialNames($faction[0]);
         $names = &LoadMaterialsCosts::$materialNames;
-        $this->costs = &LoadMaterialsCosts::$materialCosts[$this->boxInfo['current_type'-2]][$this->boxInfo['box_level']];
+        $this->costs = &LoadMaterialsCosts::$materialCosts[$names[$this->boxInfo['current_type']-2]][$this->boxInfo['box_level']];
     }
     private function calculateCosts()
     {
@@ -50,15 +51,15 @@ class UpdateMaterialBoxes
     {
         new UpdateMaterials($this->info['city_id'],$this->info['mat_box_finish_time']);
         $level = $this->boxInfo['box_level']+1;
-        DataBaseManager::query("UPDATE {map} SET box_level = $level WHERE box_id = ".$this->boxInfo['box_id']);
+        
+        DataBaseManager::query("UPDATE {map} SET box_level = $level WHERE box_id = ".$this->info['mat_box_id_cur_improvement']);
         //power plants maintenance cost is added to buildings maintenance
         if($this->boxInfo['current_type'] == 5){
-            DataBaseManager::query("UPDATE {materials} SET buildings_maintenance = ".$this->maintenances['maintenance'].",
+            DataBaseManager::query("UPDATE {materials} SET mat_box_id_cur_improvement = 0, buildings_maintenance = ".$this->maintenances['maintenance'].",
              WHERE city_id = ".$this->info['city_id']);    
         }else{
-            DataBaseManager::query("UPDATE {materials} SET ".$this->type."_maintenance_cost = ".$this->maintenances['maintenance'].",
+            DataBaseManager::query("UPDATE {materials} SET mat_box_id_cur_improvement = 0, ".$this->type."_maintenance_cost = ".$this->maintenances['maintenance'].",
          ".$this->type."_energy_cost = ".$this->maintenances['energy']." WHERE city_id = ".$this->info['city_id']);           
         }
-
     }
 }

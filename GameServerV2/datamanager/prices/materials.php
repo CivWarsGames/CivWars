@@ -30,13 +30,14 @@ class LoadMaterialsCosts
 
 	public static function getmaterialCosts($faction)
 	{
+	    
 		if(self::$loadedMaterialCosts && self::$faction == $faction)
 		{
 			return self::$materialCosts;
 		}else{
 			self::$materialCosts = self::setmaterialCosts($faction);
 			self::$faction = $faction;
-			self::$materialCosts = true;
+			self::$loadedMaterialCosts = true;		
 			//return self::$materialCosts;
 		}
 	}
@@ -52,7 +53,6 @@ class LoadMaterialsCosts
 			self::$faction = $faction;
 			//return self::$materialProduction;
 		}
-
 	}
 
 	private static function setmaterialNames($faction)
