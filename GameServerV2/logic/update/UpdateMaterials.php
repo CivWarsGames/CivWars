@@ -192,7 +192,6 @@ class UpdateMaterials
         $quantity['OIL'] = ($production['OIL']+$this->_materialsInfo['oil']) <= $capacity['WAREHOUSE'] ? ($production['OIL']+$this->_materialsInfo['oil']) : $capacity['WAREHOUSE'];
         $quantity['GOLD'] = ($production['GOLD']+$this->_materialsInfo['gold']) <= $capacity['BANK'] ? ($production['GOLD']+$this->_materialsInfo['gold']) : $capacity['BANK'];
         $this->_quantity = $quantity;
-
         //store the data that the theme will need
         if(User::get_currentCityId() == $this->_cityId){
             require_once APP.'presentation/VarsContainer.php';

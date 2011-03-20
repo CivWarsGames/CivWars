@@ -28,6 +28,8 @@ class VarsContainer
             break;
             case "GET_POST": self::loadGetPostVars();
             break;
+            case 'CURRENT_UPGRADES': self::loadCurrentUpgradesVars();
+            break;
         }
 
     }
@@ -78,6 +80,13 @@ class VarsContainer
         if(!is_array(self::$display['GET'])){
             self::$display['GET'] = &$_GET;
             self::$display['POST'] = &$_POST;
+        }
+    }
+    private static function loadCurrentUpgradesVars(){
+        require_once APP.'presentation/groups/CurrentUpgrades.php';
+        if(!is_array(self::$display['CURRENT_UPGRADES'])){
+            CurrentUpgrades::loadUpgradesInfo();
+            self::$display['CURRENT_UPGRADES'] = &CurrentUpgrades::$upgrades;
         }
     }
 }

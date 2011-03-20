@@ -13,7 +13,7 @@ class UpdateBuildings
     private $faction;
     public function UpdateBuildings()
     {
-        $result = DataBaseManager::query("SELECT * FROM {buildings} WHERE current_improvement <> 0 and finish_time <= NOW() ORDER BY finish_time ASC");
+        $result = DataBaseManager::query("SELECT * FROM {buildings} WHERE current_improvement <> 0 and finish_time <= ".time()." ORDER BY finish_time ASC");
         while($data = DataBaseManager::fetchArray($result)){
             $this->info = &$data;
             $this->selectInfo();

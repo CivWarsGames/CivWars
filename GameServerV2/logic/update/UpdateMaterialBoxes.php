@@ -11,7 +11,7 @@ class UpdateMaterialBoxes
     public function  UpdateMaterialBoxes()
     {
         $results = DataBaseManager::query("SELECT * FROM {materials} WHERE mat_box_id_cur_improvement <> 0 and
-         mat_box_finish_time <= NOW() ");
+         mat_box_finish_time <= ".time());
         while($result = DataBaseManager::fetchArray($results)){
             $this->info = &$result;
             $this->selectInfo();

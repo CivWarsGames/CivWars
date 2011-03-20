@@ -22,6 +22,7 @@ class LoadResearchesCosts
 			//return self::$researchesProperties;
 		}
 	}
+
 	public static function getResearchesCosts($faction)
 	{
 	    

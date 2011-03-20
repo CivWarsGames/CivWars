@@ -8,7 +8,7 @@ class UpdateTroopsTraining
 
     public function UpdateTroopsTraining()
     {
-        $result = DataBaseManager::query("SELECT * FROM {troops_training} WHERE next_finish_time <= NOW()");
+        $result = DataBaseManager::query("SELECT * FROM {troops_training} WHERE next_finish_time <= ".time());
         while($this->info = DataBaseManager::fetchArray($result)){
             $this->selectInfos();
             $x = $this->updateTraining();
