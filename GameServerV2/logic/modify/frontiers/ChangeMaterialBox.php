@@ -15,7 +15,6 @@ class ChangeMaterialBox
                         DataBaseManager::query("UPDATE {map} SET current_type = $_GET[to] WHERE box_id = $_GET[id]");
                     }else if($_GET['to'] == 3 || $_GET['to'] == 4){
                         DataBaseManager::query("UPDATE {map} SET current_type = $_GET[to] WHERE box_id = $_GET[id]");
-
                     }
                 }
             }
