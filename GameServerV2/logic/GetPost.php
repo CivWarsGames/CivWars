@@ -39,6 +39,10 @@ class GetPost
 			    $got = new Messenger();
 			    break;
 			    //add here
+			case 'json':
+                require_once APP.'presentation/JsonHandler.php';
+                new JsonHandler();
+			    break;
 			    
             case 'page':
                 require_once APP.'presentation/PageHandler.php';

@@ -6,18 +6,6 @@ require_once APP.'datamanager/prices/troops.php';
 /**
  *
  * This class encodes troop movements types
- * 0 => Base troops
- * 1 => Reinforcements (incoming)
- * 2 => Attack target: destroy
- * 3 => Attack target: materials
- * 4 => Attack target: Spy
- * 5 => Attack target: siege only material boxes (incoming)
- * 6 => Engineer target: New city
- * 7 => General (?? not used)
- * //UI developers only can use until here in &t="mov_type" param
- * 10 => Reinforcements (staged)
- * 11 => Siege(staged)
- * 12 => Attack returning (all)
  *
  */
 class TroopsSender

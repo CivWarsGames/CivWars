@@ -48,7 +48,7 @@ class UpdateTroopsTraining
         DataBaseManager::query("UPDATE {materials} SET troops_maintenance = $maintenance WHERE city_id = ".$this->info['city_id']);
         $troops += $this->troopCityInfo['tr'.$this->info['troop_type']];
         DataBaseManager::query("UPDATE {troop_movements} SET tr".$this->info['troop_type']." = $troops WHERE
-         owner_city_id = ".$this->info['city_id']." AND movement_type = 0");
+         reciver_city_id = ".$this->info['city_id']." AND movement_type = 0");
     }
 }
 
