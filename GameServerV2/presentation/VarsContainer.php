@@ -30,6 +30,46 @@ class VarsContainer
             break;
             case 'CURRENT_UPGRADES': self::loadCurrentUpgradesVars();
             break;
+            case "WAREHOUSE":
+                LoadBuildingsCosts::getbuildingProperties(User::get_faction());
+                self::$display['WAREHOUSE'] = &LoadBuildingsCosts::$buildingProperties['WAREHOUSE'];
+                break;
+            case "BANK":
+                LoadBuildingsCosts::getbuildingProperties(User::get_faction());
+                self::$display['BANK'] = &LoadBuildingsCosts::$buildingProperties['BANK'];
+                break;
+            case "UNIVERSITY":
+                LoadBuildingsCosts::getbuildingProperties(User::get_faction());
+                self::$display['UNIVERSITY'] = &LoadBuildingsCosts::$buildingProperties['UNIVERSITY'];
+                break;
+            case "LAB":
+                LoadBuildingsCosts::getbuildingProperties(User::get_faction());
+                self::$display['LAB'] = &LoadBuildingsCosts::$buildingProperties['LAB'];
+                break;
+            case "TRAINING_CAMP":
+                LoadBuildingsCosts::getbuildingProperties(User::get_faction());
+                self::$display['TRAINING_CAMP'] = &LoadBuildingsCosts::$buildingProperties['TRAINING_CAMP'];
+                break;
+            case "ADV_LAB":
+                LoadBuildingsCosts::getbuildingProperties(User::get_faction());
+                self::$display['ADV_LAB'] = &LoadBuildingsCosts::$buildingProperties['ADV_LAB'];
+                break;
+            case "STEEL_FACTORY":
+                LoadBuildingsCosts::getbuildingProperties(User::get_faction());
+                self::$display['STEEL_FACTORY'] = &LoadBuildingsCosts::$buildingProperties['STEEL_FACTORY'];
+                break;
+            case "REFINERY":
+                LoadBuildingsCosts::getbuildingProperties(User::get_faction());
+                self::$display['REFINERY'] = &LoadBuildingsCosts::$buildingProperties['REFINERY'];
+                break;
+            case "STOCK_EXCHANGE":
+                LoadBuildingsCosts::getbuildingProperties(User::get_faction());
+                self::$display['STOCK_EXCHANGE'] = &LoadBuildingsCosts::$buildingProperties['STOCK_EXCHANGE'];
+                break;
+            case "BASE_DEFENCES":
+                LoadBuildingsCosts::getbuildingProperties(User::get_faction());
+                self::$display['BASE_DEFENCES'] = &LoadBuildingsCosts::$buildingProperties['BASE_DEFENCES'];
+                break;
         }
 
     }
@@ -51,6 +91,9 @@ class VarsContainer
                         self::$display[$type][$id] = Messages::getMessages($id,$t3);
                     }
                     break;
+                case 'BOX':
+                    require_once APP.'presentation/groups/Box.php';
+                    self::$display[$type][$id] = Box::getInfoFromId($id);
             }
         }
     }

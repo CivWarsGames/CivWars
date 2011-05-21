@@ -26,7 +26,7 @@ class Play
             $user = self::$_session->user;
             $user->update();
             //go to index page
-            if(!isset($_GET['page'])){
+            if(!isset($_GET['page']) && !isset($_GET['json'])){
                 $_GET['page'] = 'index';
             }
         }else{

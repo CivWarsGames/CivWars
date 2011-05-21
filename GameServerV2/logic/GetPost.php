@@ -18,10 +18,10 @@ class GetPost
 	{
 		switch ($key){
 			
-			case 'ajax':
+			/*case 'ajax':
 				require_once APP.'presentation/AJAXHandler.php';
 				$got = new AJAXHandler($_GET[$key]);
-				break;			
+				break;	*/		
 			case 'upgrade':
 				require_once APP.'logic/modify/upgrade/UpgradeHandler.php';	
 				$got = new UpgradeHandler();
@@ -41,7 +41,8 @@ class GetPost
 			    //add here
 			case 'json':
                 require_once APP.'presentation/JsonHandler.php';
-                new JsonHandler();
+                $json = new JsonHandler();
+                echo $json->getjson();
 			    break;
 			    
             case 'page':

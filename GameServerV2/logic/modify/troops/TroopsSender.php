@@ -95,7 +95,8 @@ class TroopsSender
                 $oil += $this->troopCostsProperties['Tr'.$i][11];
             }
         }
-        return $oil*$this->distance;
+        
+        return 2*$oil*$this->distance;
     }
     private function sendTroops()
     {
